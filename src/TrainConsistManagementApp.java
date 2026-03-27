@@ -1,20 +1,21 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-// Goods Bogie Class
-class GoodsBogie {
-    String type;   // Cylindrical, Rectangular
-    String cargo;  // Petroleum, Coal, Grain
+// Bogie Class
+class Bogie {
+    String name;
+    int capacity;
 
-    GoodsBogie(String type, String cargo) {
-        this.type = type;
-        this.cargo = cargo;
+    Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
     }
 
     @Override
     public String toString() {
-        return type + " -> " + cargo;
+        return name + " (" + capacity + ")";
     }
 }
 
@@ -22,39 +23,59 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // Welcome Message
         System.out.println("=======================================");
-        System.out.println(" TRAIN CONSIST MANAGEMENT SYSTEM ");
+        System.out.println(" PERFORMANCE COMPARISON (LOOP vs STREAM)");
         System.out.println("=======================================");
 
-        // Create Goods Bogie List
-        List<GoodsBogie> bogies = new ArrayList<>();
+        // Create large dataset
+        List<Bogie> bogies = new ArrayList<>();
 
-        bogies.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
-        bogies.add(new GoodsBogie("Rectangular", "Coal"));      // allowed
-        bogies.add(new GoodsBogie("Cylindrical", "Petroleum")); // valid
-        bogies.add(new GoodsBogie("Rectangular", "Grain"));     // allowed
-
-        // Display Bogies
-        System.out.println("\nGoods Bogies:");
-        for (GoodsBogie b : bogies) {
-            System.out.println(b);
+        for (int i = 0; i < 100000; i++) {
+            if (i % 3 == 0)
+                bogies.add(new Bogie("Sleeper", 72));
+            else if (i % 3 == 1)
+                bogies.add(new Bogie("AC Chair", 60));
+            else
+                bogies.add(new Bogie("First Class", 24));
         }
 
-        // UC12: Safety Validation using Stream
-        boolean isSafe = bogies.stream()
-                .allMatch(b ->
-                        !b.type.equalsIgnoreCase("Cylindrical") // non-cylindrical allowed
-                                || b.cargo.equalsIgnoreCase("Petroleum") // cylindrical must be petroleum
-                );
+        // ---------------- LOOP APPROACH ----------------
+        long startLoop = System.nanoTime();
 
-        // Display Result
-        System.out.println("\nSafety Compliance Check:");
+        List<Bogie> loopResult = new ArrayList<>();
+        for (Bogie b : bogies) {
+            if (b.capacity > 60) {
+                loopResult.add(b);
+            }
+        }
 
-        if (isSafe) {
-            System.out.println("Train is SAFE for operation");
+        long endLoop = System.nanoTime();
+        long loopTime = endLoop - startLoop;
+
+        // ---------------- STREAM APPROACH ----------------
+        long startStream = System.nanoTime();
+
+        List<Bogie> streamResult = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
+
+        long endStream = System.nanoTime();
+        long streamTime = endStream - startStream;
+
+        // ---------------- RESULTS ----------------
+        System.out.println("\nFiltered Bogies Count (capacity > 60):");
+        System.out.println("Loop Result Size   : " + loopResult.size());
+        System.out.println("Stream Result Size : " + streamResult.size());
+
+        System.out.println("\nExecution Time:");
+        System.out.println("Loop Time   : " + loopTime + " ns");
+        System.out.println("Stream Time : " + streamTime + " ns");
+
+        // Verify correctness
+        if (loopResult.size() == streamResult.size()) {
+            System.out.println("\n✔ Results Match");
         } else {
-            System.out.println("Train is UNSAFE! Rule violation detected");
+            System.out.println("\n❌ Results DO NOT Match");
         }
 
         System.out.println("\nProgram continues...");
