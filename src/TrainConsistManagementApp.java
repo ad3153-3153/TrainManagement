@@ -1,5 +1,6 @@
 
-import java.util.LinkedHashSet;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TrainConsistManagementApp {
 
@@ -10,25 +11,23 @@ public class TrainConsistManagementApp {
         System.out.println(" TRAIN CONSIST MANAGEMENT SYSTEM ");
         System.out.println("=======================================");
 
-        // Create LinkedHashSet for Train Formation
-        LinkedHashSet<String> trainFormation = new LinkedHashSet<>();
+        // Create HashMap for Bogie -> Capacity
+        HashMap<String, Integer> bogieCapacity = new HashMap<>();
 
-        // Add Bogies
-        System.out.println("\nAttaching Bogies...");
-        trainFormation.add("Engine");
-        trainFormation.add("Sleeper");
-        trainFormation.add("Cargo");
-        trainFormation.add("Guard");
+        // Insert Data (Key-Value Mapping)
+        System.out.println("\nAdding Bogie Capacity Details...");
+        bogieCapacity.put("Sleeper", 72);
+        bogieCapacity.put("AC Chair", 60);
+        bogieCapacity.put("First Class", 24);
 
-        // Attempt to add duplicate
-        System.out.println("\nAttempting to add duplicate bogie 'Sleeper'...");
-        trainFormation.add("Sleeper"); // Duplicate (ignored)
+        // Display Mapping
+        System.out.println("\nBogie Capacity Details:");
 
-        // Display Formation
-        System.out.println("\nFinal Train Formation (Insertion Order Preserved):");
-        System.out.println(trainFormation);
-
-        System.out.println("\nNote: Duplicate bogies are automatically ignored.");
+        for (Map.Entry<String, Integer> entry : bogieCapacity.entrySet()) {
+            String bogie = entry.getKey();
+            int capacity = entry.getValue();
+            System.out.println(bogie + " -> Capacity: " + capacity);
+        }
 
         System.out.println("\nProgram continues...");
     }
