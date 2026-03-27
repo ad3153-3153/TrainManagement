@@ -1,20 +1,18 @@
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-// Bogie Class (Custom Object)
+// Bogie Class
 class Bogie {
     String name;
     int capacity;
 
-    // Constructor
     Bogie(String name, int capacity) {
         this.name = name;
         this.capacity = capacity;
     }
 
-    // toString() for display
     @Override
     public String toString() {
         return name + " -> Capacity: " + capacity;
@@ -30,26 +28,35 @@ public class TrainConsistManagementApp {
         System.out.println(" TRAIN CONSIST MANAGEMENT SYSTEM ");
         System.out.println("=======================================");
 
-        // Create List of Bogies
+        // Original List (from UC7)
         List<Bogie> bogies = new ArrayList<>();
-
-        // Add Bogies
-        System.out.println("\nAdding Passenger Bogies...");
         bogies.add(new Bogie("Sleeper", 72));
         bogies.add(new Bogie("AC Chair", 60));
         bogies.add(new Bogie("First Class", 24));
 
-        // Display Before Sorting
-        System.out.println("\nBefore Sorting:");
+        // Display Original List
+        System.out.println("\nAll Passenger Bogies:");
         for (Bogie b : bogies) {
             System.out.println(b);
         }
 
-        // Sort using Comparator (by capacity)
-        bogies.sort(Comparator.comparingInt(b -> b.capacity));
+        // Filter using Stream (capacity > 60)
+        List<Bogie> filteredBogies = bogies.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        // Display After Sorting
-        System.out.println("\nAfter Sorting (By Capacity - Ascending):");
+        // Display Filtered List
+        System.out.println("\nFiltered Bogies (Capacity > 60):");
+        if (filteredBogies.isEmpty()) {
+            System.out.println("No bogies match the criteria.");
+        } else {
+            for (Bogie b : filteredBogies) {
+                System.out.println(b);
+            }
+        }
+
+        // Verify Original List Unchanged
+        System.out.println("\nOriginal List After Filtering (Unchanged):");
         for (Bogie b : bogies) {
             System.out.println(b);
         }
