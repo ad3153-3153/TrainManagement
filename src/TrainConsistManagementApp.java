@@ -1,6 +1,5 @@
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedList;
 
 public class TrainConsistManagementApp {
 
@@ -11,38 +10,37 @@ public class TrainConsistManagementApp {
         System.out.println(" TRAIN CONSIST MANAGEMENT SYSTEM ");
         System.out.println("=======================================");
 
-        // Create ArrayList for Passenger Bogies
-        List<String> passengerBogies = new ArrayList<>();
+        // Create LinkedList for Train Consist
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        // Add Bogies (CREATE)
-        System.out.println("\nAdding Passenger Bogies...");
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("AC Chair");
-        passengerBogies.add("First Class");
+        // Add Bogies (Initial Order)
+        System.out.println("\nAdding Bogies...");
+        trainConsist.add("Engine");
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC");
+        trainConsist.add("Cargo");
+        trainConsist.add("Guard");
 
-        // Display Bogies (READ)
-        System.out.println("\nPassenger Bogies after addition:");
-        System.out.println(passengerBogies);
+        // Display Initial Consist
+        System.out.println("\nInitial Train Consist:");
+        System.out.println(trainConsist);
 
-        // Remove a Bogie (DELETE)
-        System.out.println("\nRemoving 'AC Chair' bogie...");
-        passengerBogies.remove("AC Chair");
+        // Insert Pantry Car at position 2
+        System.out.println("\nInserting Pantry Car at position 2...");
+        trainConsist.add(2, "Pantry");
 
-        // Display after removal
-        System.out.println("\nPassenger Bogies after removal:");
-        System.out.println(passengerBogies);
+        // Display After Insertion
+        System.out.println("\nAfter Inserting Pantry:");
+        System.out.println(trainConsist);
 
-        // Check existence (SEARCH)
-        System.out.println("\nChecking if 'Sleeper' bogie exists...");
-        if (passengerBogies.contains("Sleeper")) {
-            System.out.println("Sleeper bogie is present.");
-        } else {
-            System.out.println("Sleeper bogie is NOT present.");
-        }
+        // Remove First and Last Bogie
+        System.out.println("\nRemoving First and Last Bogie...");
+        trainConsist.removeFirst();
+        trainConsist.removeLast();
 
-        // Final State
-        System.out.println("\nFinal Passenger Bogie List:");
-        System.out.println(passengerBogies);
+        // Final Consist
+        System.out.println("\nFinal Train Consist:");
+        System.out.println(trainConsist);
 
         System.out.println("\nProgram continues...");
     }
