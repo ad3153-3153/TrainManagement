@@ -1,48 +1,58 @@
-import java.util.Arrays;
-
 /*
  * =====================================================
- * MAIN CLASS - UseCase17TrainConsistMgmt
+ * MAIN CLASS - UseCase18TrainConsistMgmt
  * =====================================================
  *
- * Use Case 17: Sort Bogie Names Using Arrays.sort()
+ * Use Case 18: Linear Search for Bogie ID
  *
  * Description:
- * This class demonstrates sorting of bogie type names
- * alphabetically using Java's built-in Arrays.sort() method.
+ * This class demonstrates searching for a specific bogie ID
+ * using a simple Linear Search algorithm.
  *
  * @author Developer
- * @version 17.0
+ * @version 18.0
  */
 
-public class UseCase17TrainConsistMgmt {
+public class UseCase18TrainConsistMgmt {
 
     public static void main(String[] args) {
 
         System.out.println("=======================================");
-        System.out.println(" UC17 - Sorting using Arrays.sort() ");
+        System.out.println(" UC18 - Linear Search for Bogie ID ");
         System.out.println("=======================================\n");
 
-        // Create array of bogie type names
-        String[] bogieTypes = {
-                "Sleeper",
-                "AC Chair",
-                "General",
-                "First Class",
-                "Second Sitting"
-        };
+        // Create array of bogie IDs
+        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-        // Display original order
-        System.out.println("Original Bogie Types:");
-        System.out.println(Arrays.toString(bogieTypes));
+        // Bogie ID to search
+        String searchId = "BG309";
 
-        // Sort using built-in method
-        Arrays.sort(bogieTypes);
+        // Display all bogie IDs
+        System.out.println("Available Bogie IDs:");
+        for (String id : bogieIds) {
+            System.out.print(id + " ");
+        }
 
-        // Display sorted result
-        System.out.println("\nSorted Bogie Types (Alphabetical):");
-        System.out.println(Arrays.toString(bogieTypes));
+        System.out.println("\n");
 
-        System.out.println("\nSorting completed using Java library.");
+        // ---- LINEAR SEARCH LOGIC ----
+        boolean found = false;
+
+        for (String id : bogieIds) {
+
+            if (id.equals(searchId)) {
+                found = true;
+                break; // stop immediately when found
+            }
+        }
+
+        // Display result
+        if (found) {
+            System.out.println("Bogie ID " + searchId + " FOUND in the system.");
+        } else {
+            System.out.println("Bogie ID " + searchId + " NOT FOUND.");
+        }
+
+        System.out.println("\nSearch operation completed.");
     }
 }
