@@ -1,62 +1,83 @@
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.List;
+// MAIN CLASS - UseCase15TrainConsistMgmt
+public class UseCase15TrainConsistMgmt {
 
-// Custom Exception
-class InvalidCapacityException extends Exception {
-    public InvalidCapacityException(String message) {
-        super(message);
-    }
-}
-
-// Passenger Bogie Class
-class PassengerBogie {
-    String type;
-    int capacity;
-
-    // Constructor with validation
-    PassengerBogie(String type, int capacity) throws InvalidCapacityException {
-        if (capacity <= 0) {
-            throw new InvalidCapacityException("Capacity must be greater than zero");
+    // ---- CUSTOM RUNTIME EXCEPTION ----
+    static class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
+            super(message);
         }
-        this.type = type;
-        this.capacity = capacity;
     }
 
-    @Override
-    public String toString() {
-        return type + " (" + capacity + ")";
+    // ---- Goods Bogie Class ----
+    static class GoodsBogie {
+        String shape;
+        String cargo;
+
+        GoodsBogie(String shape) {
+            this.shape = shape;
+        }
+
+        // Assign cargo with safety validation
+        void assignCargo(String cargo) {
+
+            try {
+                // Rule: Rectangular bogie cannot carry petroleum
+                if (shape.equalsIgnoreCase("Rectangular") &&
+                        cargo.equalsIgnoreCase("Petroleum")) {
+
+                    throw new CargoSafetyException(
+                            "Unsafe Assignment: Rectangular bogie cannot carry Petroleum"
+                    );
+                }
+
+                // If safe
+                this.cargo = cargo;
+                System.out.println("Cargo assigned: " + cargo + " -> " + shape + " bogie");
+
+            } catch (CargoSafetyException e) {
+                System.out.println("Exception Caught: " + e.getMessage());
+
+            } finally {
+                System.out.println("Logging: Cargo assignment attempt completed.\n");
+            }
+        }
+
+        @Override
+        public String toString() {
+            return shape + " bogie carrying: " +
+                    (cargo == null ? "Nothing" : cargo);
+        }
     }
-}
 
-public class TrainConsistManagementApp {
-
+    // ---- MAIN METHOD ----
     public static void main(String[] args) {
 
         System.out.println("=======================================");
-        System.out.println(" CUSTOM EXCEPTION VALIDATION ");
-        System.out.println("=======================================");
+        System.out.println(" SAFE CARGO ASSIGNMENT SYSTEM ");
+        System.out.println("=======================================\n");
 
-        List<PassengerBogie> bogies = new ArrayList<>();
+        List<GoodsBogie> bogies = new ArrayList<>();
 
-        try {
-            // Valid Bogies
-            bogies.add(new PassengerBogie("Sleeper", 72));
-            bogies.add(new PassengerBogie("AC Chair", 60));
+        // Create bogies
+        GoodsBogie b1 = new GoodsBogie("Rectangular");
+        GoodsBogie b2 = new GoodsBogie("Cylindrical");
 
-            // Invalid Bogie (will throw exception)
-            bogies.add(new PassengerBogie("First Class", 0));
+        bogies.add(b1);
+        bogies.add(b2);
 
-        } catch (InvalidCapacityException e) {
-            System.out.println("\nException Caught: " + e.getMessage());
-        }
+        // Assign cargo (safe + unsafe)
+        b1.assignCargo("Petroleum");   // ❌ unsafe
+        b2.assignCargo("Petroleum");   // ✅ safe
+        b1.assignCargo("Grain");       // ✅ safe
 
-        // Display valid bogies only
-        System.out.println("\nValid Passenger Bogies:");
-        for (PassengerBogie b : bogies) {
+        // Display final state
+        System.out.println("Final Bogie Status:");
+        for (GoodsBogie b : bogies) {
             System.out.println(b);
         }
 
-        System.out.println("\nProgram continues...");
+        System.out.println("\nSystem running safely...");
     }
 }
