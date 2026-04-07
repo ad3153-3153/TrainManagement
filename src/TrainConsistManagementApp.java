@@ -1,17 +1,3 @@
-/*
- * =====================================================
- * MAIN CLASS - UseCase20TrainConsistMgmt
- * =====================================================
- *
- * Use Case 20: Exception Handling During Search Operations
- *
- * Description:
- * This class prevents search operations on an empty train
- * by validating state and throwing IllegalStateException.
- *
- * @author Developer
- * @version 20.0
- */
 
 import java.util.*;
 
