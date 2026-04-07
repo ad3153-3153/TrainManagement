@@ -1,58 +1,69 @@
 /*
  * =====================================================
- * MAIN CLASS - UseCase18TrainConsistMgmt
+ * MAIN CLASS - UseCase19TrainConsistMgmt
  * =====================================================
  *
- * Use Case 18: Linear Search for Bogie ID
+ * Use Case 19: Binary Search for Bogie ID
  *
  * Description:
- * This class demonstrates searching for a specific bogie ID
- * using a simple Linear Search algorithm.
+ * This class demonstrates searching for a bogie ID
+ * using Binary Search on sorted data.
  *
  * @author Developer
- * @version 18.0
+ * @version 19.0
  */
 
-public class UseCase18TrainConsistMgmt {
+import java.util.Arrays;
+
+public class UseCase19TrainConsistMgmt {
 
     public static void main(String[] args) {
 
         System.out.println("=======================================");
-        System.out.println(" UC18 - Linear Search for Bogie ID ");
+        System.out.println(" UC19 - Binary Search for Bogie ID ");
         System.out.println("=======================================\n");
 
-        // Create array of bogie IDs
+        // Sorted array of bogie IDs (IMPORTANT)
         String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
 
-        // Bogie ID to search
+        // Search key
         String searchId = "BG309";
 
-        // Display all bogie IDs
+        // Display IDs
         System.out.println("Available Bogie IDs:");
-        for (String id : bogieIds) {
-            System.out.print(id + " ");
-        }
+        System.out.println(Arrays.toString(bogieIds));
+        System.out.println();
 
-        System.out.println("\n");
-
-        // ---- LINEAR SEARCH LOGIC ----
+        // ---- BINARY SEARCH LOGIC ----
+        int low = 0;
+        int high = bogieIds.length - 1;
         boolean found = false;
 
-        for (String id : bogieIds) {
+        while (low <= high) {
 
-            if (id.equals(searchId)) {
+            int mid = (low + high) / 2;
+
+            int result = searchId.compareTo(bogieIds[mid]);
+
+            if (result == 0) {
                 found = true;
-                break; // stop immediately when found
+                break;
+            }
+            else if (result > 0) {
+                low = mid + 1;   // search right half
+            }
+            else {
+                high = mid - 1;  // search left half
             }
         }
 
         // Display result
         if (found) {
-            System.out.println("Bogie ID " + searchId + " FOUND in the system.");
+            System.out.println("Bogie ID " + searchId + " FOUND.");
         } else {
             System.out.println("Bogie ID " + searchId + " NOT FOUND.");
         }
 
-        System.out.println("\nSearch operation completed.");
+        System.out.println("\nSearch completed using Binary Search.");
     }
 }
