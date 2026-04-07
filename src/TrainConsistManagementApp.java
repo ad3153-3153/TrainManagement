@@ -1,20 +1,5 @@
 import java.util.Arrays;
 
-/*
- * =====================================================
- * MAIN CLASS - UseCase17TrainConsistMgmt
- * =====================================================
- *
- * Use Case 17: Sort Bogie Names Using Arrays.sort()
- *
- * Description:
- * This class demonstrates sorting of bogie type names
- * alphabetically using Java's built-in Arrays.sort() method.
- *
- * @author Developer
- * @version 17.0
- */
-
 public class UseCase17TrainConsistMgmt {
 
     public static void main(String[] args) {
