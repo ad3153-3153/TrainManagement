@@ -1,17 +1,3 @@
-/*
- * =====================================================
- * MAIN CLASS - UseCase18TrainConsistMgmt
- * =====================================================
- *
- * Use Case 18: Linear Search for Bogie ID
- *
- * Description:
- * This class demonstrates searching for a specific bogie ID
- * using a simple Linear Search algorithm.
- *
- * @author Developer
- * @version 18.0
- */
 
 public class UseCase18TrainConsistMgmt {
 
