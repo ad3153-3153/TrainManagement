@@ -1,69 +1,64 @@
 /*
  * =====================================================
- * MAIN CLASS - UseCase19TrainConsistMgmt
+ * MAIN CLASS - UseCase20TrainConsistMgmt
  * =====================================================
  *
- * Use Case 19: Binary Search for Bogie ID
+ * Use Case 20: Exception Handling During Search Operations
  *
  * Description:
- * This class demonstrates searching for a bogie ID
- * using Binary Search on sorted data.
+ * This class prevents search operations on an empty train
+ * by validating state and throwing IllegalStateException.
  *
  * @author Developer
- * @version 19.0
+ * @version 20.0
  */
 
-import java.util.Arrays;
+import java.util.*;
 
-public class UseCase19TrainConsistMgmt {
+public class UseCase20TrainConsistMgmt {
 
     public static void main(String[] args) {
 
         System.out.println("=======================================");
-        System.out.println(" UC19 - Binary Search for Bogie ID ");
+        System.out.println(" UC20 - Exception Handling in Search ");
         System.out.println("=======================================\n");
 
-        // Sorted array of bogie IDs (IMPORTANT)
-        String[] bogieIds = {"BG101", "BG205", "BG309", "BG412", "BG550"};
+        // Create bogie list (EMPTY case)
+        List<String> bogieIds = new ArrayList<>();
 
         // Search key
-        String searchId = "BG309";
+        String searchId = "BG101";
 
-        // Display IDs
-        System.out.println("Available Bogie IDs:");
-        System.out.println(Arrays.toString(bogieIds));
-        System.out.println();
+        try {
 
-        // ---- BINARY SEARCH LOGIC ----
-        int low = 0;
-        int high = bogieIds.length - 1;
-        boolean found = false;
-
-        while (low <= high) {
-
-            int mid = (low + high) / 2;
-
-            int result = searchId.compareTo(bogieIds[mid]);
-
-            if (result == 0) {
-                found = true;
-                break;
+            // ---- STATE VALIDATION ----
+            if (bogieIds.isEmpty()) {
+                throw new IllegalStateException(
+                        "Cannot perform search: No bogies available in the train."
+                );
             }
-            else if (result > 0) {
-                low = mid + 1;   // search right half
+
+            // ---- SEARCH LOGIC (Linear Search) ----
+            boolean found = false;
+
+            for (String id : bogieIds) {
+                if (id.equals(searchId)) {
+                    found = true;
+                    break;
+                }
             }
-            else {
-                high = mid - 1;  // search left half
+
+            // Display result
+            if (found) {
+                System.out.println("Bogie ID " + searchId + " FOUND.");
+            } else {
+                System.out.println("Bogie ID " + searchId + " NOT FOUND.");
             }
+
+        } catch (IllegalStateException e) {
+            System.out.println("Exception: " + e.getMessage());
         }
 
-        // Display result
-        if (found) {
-            System.out.println("Bogie ID " + searchId + " FOUND.");
-        } else {
-            System.out.println("Bogie ID " + searchId + " NOT FOUND.");
-        }
-
-        System.out.println("\nSearch completed using Binary Search.");
+        System.out.println("\nProgram terminated safely.");
     }
 }
