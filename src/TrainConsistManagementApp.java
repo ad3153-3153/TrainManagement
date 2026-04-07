@@ -1,17 +1,4 @@
-/*
- * =====================================================
- * MAIN CLASS - UseCase19TrainConsistMgmt
- * =====================================================
- *
- * Use Case 19: Binary Search for Bogie ID
- *
- * Description:
- * This class demonstrates searching for a bogie ID
- * using Binary Search on sorted data.
- *
- * @author Developer
- * @version 19.0
- */
+
 
 import java.util.Arrays;
 
